@@ -1,0 +1,83 @@
+{% extends 'base.html'%}
+{% block content %}
+
+
+<section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-4"> Order Page</h1>
+          <p class="lead">Check your order details</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#">
+              <i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item active"> Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+<!--alert-->
+{% include 'partials/_alerts.html' %}
+  <section id="dashboard" class="py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          {% if data %}
+          <h2>Welcome {{user.username}}</h2>
+          <p>Here are the ordered products of your's</p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product name</th>
+                <th scope="col">Price </th>
+                <th scope="col">Order date </th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for data in data %}
+              <tr>
+                <td>{{data.product.id}}</td>
+                <td>{{data.product.name}}</td>
+                <td>{{data.product.price}}</td>
+                <td>{{data.product.created_at}}</td>
+                {% if data.product %}
+                <td>
+                  <form class="btn btn-danger" action="{% url 'order_by_id' data.id %}" method ="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Cancel order" class="btn btn-danger">
+                    <input type="hidden" name="cancel" value="{{data.id}}">
+                  </form>
+                  {% comment %} <form class="btn btn-primary" action="{% url 'update_order_by_id' data.id %}" method ="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Update order" class="btn btn-primary">
+                    <input type="hidden" name="update" value="{{data.id}}">
+                  </form> {% endcomment %}
+                </td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <p> you have not any entry  </p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load  humanize %}
+{% block content %}
+
+
+{% for listing in listing %}
+  <section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-4">{{listing.name}}</h1>
+          <p class="lead">
+            <i class="fas fa-map-marker"></i>{{listing.description}}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#">Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a>Order Now</a>
+          </li>
+          <li class="breadcrumb-item active">{{ listing.name }}</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Listing -->
+  <section id="listing" class="py-4">
+    <div class="container">
+      <a href="{% url 'listings'%}" class="btn btn-light mb-4">Back To All products</a>
+
+      <div class="row">
+        <div class="col-md-9">
+
+          <!-- Fields -->
+          <div class="row mb-5 fields">
+            <div class="col-md-6">
+              <ul class="list-group ">
+                <li class="list-group-item text-secondary">
+                  <i></i> Description:
+                  <span class="float-right">{{ listing.description }}</span>
+                </li>
+                <li class="list-group-item text-secondary">
+                  <i></i> Product Price:
+                  <span class="float-right">{{ listing.price| intcomma }}</span>
+                </li>
+                <li class="list-group-item text-secondary">
+                  <i></i> Stock:
+                  <span class="float-right">{{listing.stock}}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="row mb-5">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <form action="{% url 'orders' %}" method ="post">
+            {% csrf_token %}
+          <div class="card mb-3">
+            <img class="card-img-top" src="{{ listing.image}}" alt="" name="image">
+            <div class="card-body">
+              <h6 class="text-secondary" name="name">Name: {{listing.name}}</h6>
+              <h6 class="text-secondary" name="stock">Stocks: {{listing.stock}}</h6>
+            </div>
+          </div>
+          <input type="hidden" name="id" value="{{listing.id}}">
+          <input type="submit" value="Order" class="btn btn-secondary btn-block">
+        </form>
+        </div>
+        
+
+      </div>
+    </div>
+  </section>
+
+{% endfor%}
+{% endblock %}
