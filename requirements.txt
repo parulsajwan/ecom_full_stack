@@ -1,3 +1,4 @@
+Python 3.8.0 
 asgiref==3.5.2
 autopep8==1.6.0
 backports.zoneinfo==0.2.1
@@ -10,4 +11,3 @@ pytz==2022.1
 sqlparse==0.4.2
 toml==0.10.2
 tzdata==2022.1
-python-3.10.4
